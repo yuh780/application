@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ランダムくじ引き</title>
+<style>
+body {
+  font-family: sans-serif;
+}
+#choices-container {
+  margin-bottom: 10px;
+}
+#choices-textarea {
+  width: 300px;
+  height: 100px;
+  margin-bottom: 5px;
+}
+#result {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-top: 10px;
+}
+</style>
+</head>
+<body>
+
+<h1>ランダムくじ引き</h1>
+
+<div id="choices-container">
+  <textarea id="choices-textarea" placeholder="選択肢を改行で入力"></textarea><br>
+  <button onclick="addChoice()">追加</button>
+</div>
+
+<button onclick="drawLottery()">くじを引く</button>
+
+<div id="result"></div>
+
+<script>
+let choices = [];
+const choicesTextarea = document.getElementById('choices-textarea');
+const resultDiv = document.getElementById('result');
+
+function addChoice() {
+  const newChoices = choicesTextarea.value.trim().split('\n').filter(choice => choice !== '');
+  choices = [...choices, ...newChoices];
+  choicesTextarea.value = '';
+  choicesTextarea.placeholder = '選択肢を追加しました';
+  console.log('現在の選択肢:', choices);
+}
+
+function drawLottery() {
+  if (choices.length === 0) {
+    resultDiv.innerText = '選択肢がありません。追加してください。';
+    return;
+  }
+  const randomIndex = Math.floor(Math.random() * choices.length);
+  const selectedChoice = choices[randomIndex];
+  resultDiv.innerText = '選ばれたのは... ' + selectedChoice + '！';
+}
+</script>
+
+</body>
+</html>
